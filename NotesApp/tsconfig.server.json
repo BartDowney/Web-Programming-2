@@ -1,0 +1,12 @@
+{
+    "extends": "./tsconfig.json",
+    "include": ["server.ts"],
+    "exclude": ["node_modules"],
+    "compilerOptions": {
+      "target": "es6",
+      "module": "commonjs",
+      "esModuleInterop": true,
+    }
+  }
+  
+  
