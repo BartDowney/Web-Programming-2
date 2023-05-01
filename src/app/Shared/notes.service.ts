@@ -15,7 +15,7 @@ export class NotesService {
 
   getAll() {
     //return this.notes;
-    return this.http.get<Note[]>(`${this.baseUrl}/notes`);
+    return this.http.get<Note[]>(`${this.baseUrl}/notes/`);
   }
 
   get(id: number) {
@@ -32,7 +32,7 @@ export class NotesService {
     //let newLength = this.notes.push(note);
     //let index = newLength - 1;
     //return index;
-    return this.http.post(`${this.baseUrl}/notes`, note);
+    return this.http.post(`${this.baseUrl}/notes/`, note);
   }
 
   update(id: number, title: string, body: string) {

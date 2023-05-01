@@ -27,7 +27,7 @@ export class NoteDetailsComponent implements OnInit {
         //this.note = this.notesService.get(params.id);
         //this.noteId = params.id;
         //this.new = false;
-        this.http.get<{ note: Note }>(`/api/notes/${params.id}`).subscribe(responseData => {
+        this.http.get<{ note: Note }>(`http://localhost:3100/api/notes/${params.id}`).subscribe(responseData => {
           this.note = responseData.note;
           this.noteId = params.id;
           this.new = false;
@@ -42,12 +42,21 @@ export class NoteDetailsComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (this.new) {
-      this.http.post<{ message: string, note: Note }>('/api/notes', form.value).subscribe(responseData => {
+      this.http.post<{ message: string, note: Note }>('http://localhost:3100/api/notes/', form.value).subscribe(responseData => {
         console.log(responseData.message);
         this.router.navigateByUrl('/');
       });
     } else {
-      this.http.put<{ message: string }>('/api/notes/' + this.noteId, form.value).subscribe(responseData => {
+      this.http.put<{ message: string }>('http://localhost:3100/api/notes/' + this.noteId, form.value).subscribe(responseData => {
+        console.log(responseData.message);
+        this.router.navigateByUrl('/');
+      });
+    }
+  }
+
+  onDelete() {
+    if (this.noteId) {
+      this.http.delete<{ message: string }>(`http://localhost:3100/api/notes/${this.noteId}`).subscribe(responseData => {
         console.log(responseData.message);
         this.router.navigateByUrl('/');
       });

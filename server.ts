@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import mongoose, { ConnectOptions } from 'mongoose';
+import cors from 'cors';
 import { getNote, Note, getNotes, createNote, updateNote, deleteNote } from './src/app/Shared/note.model';
 
 const app = express();
@@ -16,10 +17,17 @@ mongoose
     console.error('Error connecting to MongoDB:', error);
   });
 
+  app.use(cors({
+    origin: 'http://localhost:4200'
+  }));
+  
 app.use(express.json());
 
-// Define the Note model
 const NoteSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    required: true
+  },
   title: String,
   body: String
 });
@@ -30,7 +38,7 @@ const NoteModel = mongoose.model<NoteModel>('Note', NoteSchema);
 
 // Routes
 // Get all notes
-app.get('/api/notes', async (req: Request, res: Response) => {
+app.get('/api/notes/', async (req: Request, res: Response) => {
   try {
     const notes: Note[] = await NoteModel.find();
     res.json(notes);
@@ -46,9 +54,9 @@ app.get('/api/notes/:id', getNote, (req: Request, res: Response<Note>) => {
 
 
 // Create a new note
-app.post('/api/notes', async (req: Request, res: Response) => {
+app.post('/api/notes/', async (req: Request, res: Response) => {
   const note: Note = {
-    id: null,
+    id: generateUniqueId(),
     title: req.body.title,
     body: req.body.body
   };
@@ -60,6 +68,13 @@ app.post('/api/notes', async (req: Request, res: Response) => {
     res.status(400).json({ message: err.message });
   }
 });
+
+function generateUniqueId(): number {
+  const timestamp = Date.now();
+  const random = Math.floor(Math.random() * 1000000); // Adjust the range as needed
+  return timestamp + random;
+}
+
 
 // Update an existing note by id
 app.put('/api/notes/:id', getNote, async (req: Request, res: Response) => {
