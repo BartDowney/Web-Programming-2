@@ -6,6 +6,8 @@ Next, open the Notes app in Visual Studio Code. Open a new terminal and navigate
 
 Next you need to transpile all of the Typescript files into Javascript files that can be used by the node.js server. Do this by typing "ng run build." Then in the solution window, open the "dist" folder and find the "server.js" file. Open this file and find the line that imports the Note. At the end of this line, add ".js" to the end of "note.model." The final line will read:
 
+import { getNote } from './src/app/Shared/note.model.js';
+
 Save this file.
 
 Open a new terminal and navigate to "cd notes-frontend." Type "node dist/out-tsc/server.js." This is how you start the node.js server, and as long as you have MongoDB running, you should see two messages appear in your terminal:
