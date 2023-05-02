@@ -13,6 +13,7 @@ Save this file.
 Open a new terminal and navigate to "cd notes-frontend." Type "node dist/out-tsc/server.js." This is how you start the node.js server, and as long as you have MongoDB running, you should see two messages appear in your terminal:
 
 Server open on port 3100
+
 Connected to MongoDB
 
 After this, open a new terminal and navigate to "cd notes-frontend." Type "ng serve --open." This will start the application and open it in your browser.
